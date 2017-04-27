@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Erp.Data;
 using Erp.Models.People;
+using Sakura.AspNetCore;
 
 namespace Erp.Controllers
 {
@@ -15,14 +16,35 @@ namespace Erp.Controllers
 
         public PeopleController(ApplicationDbContext context)
             :base(context)
-        {  }
+        {
+            
+        }
 
         // GET: People
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, int? page, int? pageSize)
         {
-            return View(await _context.People
-                .Include(p => p.Gender)
-                .ToListAsync());
+            IQueryable<Person> items = _context.People
+                .Include(p => p.Gender);
+            //AddFieldNames<Person>();
+            //AddSortParameters<Person>(sortOrder);
+            ViewData["FirstNameSortParam"] = String.IsNullOrEmpty(sortOrder) ? "firstname_desc" : "";
+            ViewData["LastNameSortParam"] = sortOrder == "lastname" ? "lastname_desc" : "lastname";
+            switch(sortOrder)
+            {
+                case "firstname":
+                    items = items.OrderBy(x => x.FirstName);
+                    break;
+                case "firstname_desc":
+                    items = items.OrderByDescending(x => x.FirstName);
+                    break;
+                case "lastname":
+                    items = items.OrderBy(x => x.LastName);
+                    break;
+                case "lastname_desc":
+                    items = items.OrderByDescending(x => x.LastName);
+                    break;
+            }
+            return View(Paginated(items, page, pageSize));
         }
 
         // GET: People/Details/5
@@ -40,7 +62,6 @@ namespace Erp.Controllers
             {
                 return NotFound();
             }
-
             return View(person);
         }
 

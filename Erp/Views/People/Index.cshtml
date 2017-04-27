@@ -1,5 +1,5 @@
-@model IEnumerable<Erp.Models.People.Person>
-
+@model IPagedList<Erp.Models.People.Person>
+@using Sakura.AspNetCore
 @{
     ViewData["Title"] = "Index";
 }
@@ -9,23 +9,24 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+
+<table class="table table-bordered table-striped table-condensed">
     <thead>
         <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.FirstName)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["FirstNameSortParam"]">@Html.DisplayNameFor(model => model.First().FirstName)</a>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.LastName)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["LastNameSortParam"]">@Html.DisplayNameFor(model => model.First().LastName)</a>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.SocialId)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["SocialIdSortParam"]">@Html.DisplayNameFor(model => model.First().SocialId)</a>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.BirthDate)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["BirthDateSortParam"]">@Html.DisplayNameFor(model => model.First().BirthDate)</a>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Gender)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["GenderSortParam"]">@Html.DisplayNameFor(model => model.First().Gender)</a>
                 </th>
             <th></th>
         </tr>
@@ -57,3 +58,4 @@
 }
     </tbody>
 </table>
+<pager setting-link-attr-data-ajax="true"/>

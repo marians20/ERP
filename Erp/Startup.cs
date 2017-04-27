@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Sakura.AspNetCore.Mvc;
 using Erp.Data;
 using Erp.Models;
 using Erp.Services;
@@ -53,6 +54,13 @@ namespace Erp
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+
+            // Add default bootstrap-styled pager implementation
+            services.AddBootstrapPagerGenerator(options =>
+            {
+                // Use default pager options.
+                options.ConfigureDefault();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
