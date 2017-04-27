@@ -21,15 +21,23 @@ namespace Erp.Controllers
         }
 
         // GET: People
-        public async Task<IActionResult> Index(string sortOrder, int? page, int? pageSize)
+        public async Task<IActionResult> Index(string searchString, string sortOrder, int? page, int? pageSize)
         {
             IQueryable<Person> items = _context.People
                 .Include(p => p.Gender);
+            ViewData["CurrentFilter"] = searchString;
             //AddFieldNames<Person>();
             //AddSortParameters<Person>(sortOrder);
             ViewData["FirstNameSortParam"] = String.IsNullOrEmpty(sortOrder) ? "firstname_desc" : "";
             ViewData["LastNameSortParam"] = sortOrder == "lastname" ? "lastname_desc" : "lastname";
-            switch(sortOrder)
+            
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                searchString = searchString.Trim().ToLower();
+                items = items.Where(s => s.FirstName.ToLower().Contains(searchString)
+                                       || s.LastName.ToLower().Contains(searchString));
+            }
+            switch (sortOrder)
             {
                 case "firstname":
                     items = items.OrderBy(x => x.FirstName);

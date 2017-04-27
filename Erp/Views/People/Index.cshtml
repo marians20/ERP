@@ -6,6 +6,27 @@
 
 <h2>Index</h2>
 
+<div class="container">
+    <form asp-action="Index" method="get">
+        <div class="row">
+            <div id="custom-search-input">
+                <div class="input-group col-md-4">
+                    <input type="text" name="SearchString" value="@ViewData["currentFilter"]"
+                           class="search-query form-control" placeholder="Search" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-danger" type="button">
+                            <span class=" glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>                   
+                </div>
+                <div class="col-md-4">
+                    <a asp-action="Index">Back to Full List</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -13,49 +34,50 @@
 <table class="table table-bordered table-striped table-condensed">
     <thead>
         <tr>
-                <th>
-                    <a asp-action="Index" asp-route-sortOrder="@ViewData["FirstNameSortParam"]">@Html.DisplayNameFor(model => model.First().FirstName)</a>
-                </th>
-                <th>
-                    <a asp-action="Index" asp-route-sortOrder="@ViewData["LastNameSortParam"]">@Html.DisplayNameFor(model => model.First().LastName)</a>
-                </th>
-                <th>
-                    <a asp-action="Index" asp-route-sortOrder="@ViewData["SocialIdSortParam"]">@Html.DisplayNameFor(model => model.First().SocialId)</a>
-                </th>
-                <th>
-                    <a asp-action="Index" asp-route-sortOrder="@ViewData["BirthDateSortParam"]">@Html.DisplayNameFor(model => model.First().BirthDate)</a>
-                </th>
-                <th>
-                    <a asp-action="Index" asp-route-sortOrder="@ViewData["GenderSortParam"]">@Html.DisplayNameFor(model => model.First().Gender)</a>
-                </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["FirstNameSortParam"]">@Html.DisplayNameFor(model => model.First().FirstName)</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["LastNameSortParam"]">@Html.DisplayNameFor(model => model.First().LastName)</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["SocialIdSortParam"]">@Html.DisplayNameFor(model => model.First().SocialId)</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["BirthDateSortParam"]">@Html.DisplayNameFor(model => model.First().BirthDate)</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["GenderSortParam"]">@Html.DisplayNameFor(model => model.First().Gender)</a>
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SocialId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BirthDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gender.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SocialId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BirthDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
-<pager setting-link-attr-data-ajax="true"/>
+<pager setting-link-attr-data-ajax="true" />
